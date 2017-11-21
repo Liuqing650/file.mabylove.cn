@@ -6,6 +6,8 @@ import { Icon } from 'antd';
 import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
 
+import { config } from '../utils';
+
 const links = [{
   title: '帮助',
   href: '',
@@ -17,7 +19,7 @@ const links = [{
   href: '',
 }];
 
-const copyright = <div>Copyright <Icon type="copyright" /> 2017 蚂蚁金服体验技术部出品</div>;
+const copyright = <div>Mabylove <Icon type="copyright" /> 2017.11 帷中暮色 | www.mabylove.cn</div>;
 
 class UserLayout extends React.PureComponent {
   static childContextTypes = {
@@ -47,11 +49,11 @@ class UserLayout extends React.PureComponent {
           <div className={styles.top}>
             <div className={styles.header}>
               <Link to="/">
-                <img alt="" className={styles.logo} src="https://gw.alipayobjects.com/zos/rmsportal/NGCCBOENpgTXpBWUIPnI.svg" />
-                <span className={styles.title}>Ant Design</span>
+                <img alt="" className={styles.logo} src="http://img.mabylove.cn/rootImg/logo/logoP100.png" />
+                <span className={styles.title}>文件服务中心</span>
               </Link>
             </div>
-            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+            <div className={styles.desc}>Mabylove 个人文件自动分类管理平台</div>
           </div>
           {
             getRouteData('UserLayout').map(item =>

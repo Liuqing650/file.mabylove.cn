@@ -123,3 +123,15 @@ export async function saveComment(params) {
     data:params,
   })
 }
+
+/*
+ * 登录平台
+ */
+ //获取文件列表
+export async function login(params) {
+  return request2(config.mabyHost+'/userInfo/userlogin', {
+    method: 'post',
+    body: stringify(params),
+    data:params,
+  })
+}

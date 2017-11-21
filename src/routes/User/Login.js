@@ -51,6 +51,8 @@ export default class Login extends Component {
     this.props.form.validateFields({ force: true },
       (err, values) => {
         if (!err) {
+          values.ip='000.0.0.1';
+          values.cityName='重庆市';
           this.props.dispatch({
             type: `login/${type}Submit`,
             payload: values,
@@ -79,7 +81,7 @@ export default class Login extends Component {
       <div className={styles.main}>
         <Form onSubmit={this.handleSubmit}>
           <Tabs animated={false} className={styles.tabs} activeKey={type} onChange={this.onSwitch}>
-            <TabPane tab="账户密码登录" key="account">
+            <TabPane tab="帐号登录" key="account">
               {
                 login.status === 'error' &&
                 login.type === 'account' &&
@@ -87,7 +89,7 @@ export default class Login extends Component {
                 this.renderMessage('账户或密码错误')
               }
               <FormItem>
-                {getFieldDecorator('userName', {
+                {getFieldDecorator('user_name', {
                   rules: [{
                     required: type === 'account', message: '请输入账户名！',
                   }],
@@ -95,7 +97,7 @@ export default class Login extends Component {
                   <Input
                     size="large"
                     prefix={<Icon type="user" className={styles.prefixIcon} />}
-                    placeholder="admin"
+                    placeholder="请输入帐号"
                   />
                 )}
               </FormItem>
@@ -109,12 +111,12 @@ export default class Login extends Component {
                     size="large"
                     prefix={<Icon type="lock" className={styles.prefixIcon} />}
                     type="password"
-                    placeholder="888888"
+                    placeholder="此处与mabylove.cn帐号相同"
                   />
                 )}
               </FormItem>
             </TabPane>
-            <TabPane tab="手机号登录" key="mobile">
+            <TabPane tab="手机号登录(已禁用)" key="mobile" disabled>
               {
                 login.status === 'error' &&
                 login.type === 'mobile' &&
@@ -178,14 +180,6 @@ export default class Login extends Component {
             </Button>
           </FormItem>
         </Form>
-        <div className={styles.other}>
-          其他登录方式
-          {/* 需要加到 Icon 中 */}
-          <span className={styles.iconAlipay} />
-          <span className={styles.iconTaobao} />
-          <span className={styles.iconWeibo} />
-          <Link className={styles.register} to="/user/register">注册账户</Link>
-        </div>
       </div>
     );
   }

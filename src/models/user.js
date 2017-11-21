@@ -1,3 +1,4 @@
+import { routerRedux } from 'dva/router';
 import { query as queryUsers, queryCurrent } from '../services/user';
 
 export default {
@@ -10,27 +11,35 @@ export default {
   },
 
   effects: {
-    *fetch(_, { call, put }) {
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
-      const response = yield call(queryUsers);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-      yield put({
-        type: 'changeLoading',
-        payload: false,
-      });
-    },
+    // *fetch(_, { call, put }) {
+    //   yield put({
+    //     type: 'changeLoading',
+    //     payload: true,
+    //   });
+    //   const response = yield call(queryUsers);
+    //   yield put({
+    //     type: 'save',
+    //     payload: response,
+    //   });
+    //   yield put({
+    //     type: 'changeLoading',
+    //     payload: false,
+    //   });
+    // },
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
+      // const response = yield call(queryCurrent);
+      const response = {};
+      response.name = sessionStorage.name?sessionStorage.name:'匿名用户';
+      response.avatar = sessionStorage.avatar?sessionStorage.avatar:'http://img.mabylove.cn/rootImg/logo/logoP100.png';
+      if(sessionStorage.name) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response,
+        });
+      } else {
+        yield put(routerRedux.push('/user/login'));
+      }
+      
     },
   },
 
