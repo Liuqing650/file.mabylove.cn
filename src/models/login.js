@@ -18,29 +18,29 @@ export default {
         const data = yield call(login, payload);
         console.log(loginMsg);
         const loginMsg = data.loginMsg;
-        if(loginMsg[0].state==1) {
-            message.success('登陆成功')
-            sessionStorage.setItem('id', loginMsg[0].id);
-            sessionStorage.setItem('name', loginMsg[0].nick_name);
-            sessionStorage.setItem('avatar',loginMsg[0].avatar?loginMsg[0].avatar:null);
-            let response = { "status": "ok", "type": "account" };
-            yield put({
-                type: 'changeLoginStatus',
-                payload: response,
-            });
-        } else if(loginMsg[0].state==2) {
-            message.warning('您的账号已被封')
-            yield put({type:'hideLoading'});
-        } else if(loginMsg[0].state==0) {
-            message.warning('登陆失败,您的账号或者密码错误!')
-            yield put({type:'hideLoading'});
+        if(loginMsg&&loginMsg.length>0) {
+          if(loginMsg[0].state==1) {
+              message.success('登陆成功')
+              sessionStorage.setItem('id', loginMsg[0].id);
+              sessionStorage.setItem('name', loginMsg[0].nick_name);
+              sessionStorage.setItem('avatar',loginMsg[0].avatar?loginMsg[0].avatar:null);
+              let response = { "status": "ok", "type": "account" };
+              yield put({
+                  type: 'changeLoginStatus',
+                  payload: response,
+              });
+          } else if(loginMsg[0].state==2) {
+              message.warning('您的账号已被封')
+          } else {
+              message.warning('登陆失败,您的账号或者密码错误!')
+          }
         } else {
             message.error('登陆失败,您的账号或者密码错误!')
         }
-          yield put({
-            type: 'changeSubmitting',
-            payload: false,
-          });
+        yield put({
+          type: 'changeSubmitting',
+          payload: false,
+        });
     },
     *mobileSubmit(_, { call, put }) {
       yield put({
